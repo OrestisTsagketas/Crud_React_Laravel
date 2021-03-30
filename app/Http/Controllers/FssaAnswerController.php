@@ -14,10 +14,14 @@ class FssaAnswerController extends Controller
      */
     public function index()
     {
-        // $answers = answer::orderBy('updated_at', 'DESC')->get();
-        // return response() -> json(['status' => 200, 'posts' => $answers]);
-        $answers = fssa_answer::all();
-        return $answers;
+        try {
+            $answers = fssa_answer::all();
+            return $answers;
+        }catch (\Exception $e) {
+      
+            return $e->getMessage();
+        }
+        
     }
 
     /**
@@ -38,10 +42,14 @@ class FssaAnswerController extends Controller
      */
     public function store(Request $request)
     {
-        $answer = new fssa_answer();
-        $answer->title = $request->title;
-        $answer->question_id = $request->question_id;
-        $answer->save();
+        try{
+            $answer = new fssa_answer();
+            $answer->title = $request->title;
+            $answer->question_id = $request->question_id;
+            $answer->save();
+        }catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -51,9 +59,13 @@ class FssaAnswerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($question_id)
-    {
-        $answers = fssa_answer::where('question_id','=',$question_id)->get();
-        return response() -> json(['status' => 200, 'posts' => $answers]);
+    {   
+        try{
+            $answers = fssa_answer::where('question_id','=',$question_id)->get();
+            return response() -> json(['status' => 200, 'posts' => $answers]);
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
 
     /**
@@ -65,8 +77,12 @@ class FssaAnswerController extends Controller
 
     public function edit($id)
     {
-        $answer = fssa_answer::find($id);
-        return $answer;
+        try{$answer = fssa_answer::find($id);
+            return $answer;
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
+        
     }
 
     /**
@@ -77,11 +93,15 @@ class FssaAnswerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $answer = fssa_answer::find($id);
-        $answer->title = $request->title;
-        if($answer -> save()){
-            return response()->json(["status" => 200]);
+    {   
+        try{
+            $answer = fssa_answer::find($id);
+            $answer->title = $request->title;
+            if($answer -> save()){
+                return response()->json(["status" => 200]);
+            }
+        }catch (\Exception $e) {
+            $e->getMessage();
         }
     }
 

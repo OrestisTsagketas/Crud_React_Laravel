@@ -16,10 +16,12 @@ class FssaQuestionnaireController extends Controller
      */
     public function index()
     {
-        // $questionnaires = Questionnaire::orderBy('updated_at', 'DESC')->get();
-        // return response() -> json(['status' => 200, 'posts' => $questionnaires]);
-        $questionnaires = fssa_questionnaire::all();
-        return $questionnaires;
+        try{
+            $questionnaires = fssa_questionnaire::all();
+            return $questionnaires;
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
 
     /**
@@ -40,17 +42,25 @@ class FssaQuestionnaireController extends Controller
      */
     public function store(Request $request)
     {
-        $questionnaire = new fssa_questionnaire();
-        $questionnaire->title = $request->title;
+        try{
+            $questionnaire = new fssa_questionnaire();
+            $questionnaire->title = $request->title;
         if($questionnaire -> save()){
             return response()->json(["status" => 200]);
+        }
+        }catch (\Exception $e) {
+            $e->getMessage();
         }
     }
 
     public function get($title)
     {
-        $questionnaire = fssa_questionnaire::where('title','=',$title)->get();
-        return response() -> json(['status' => 200, 'posts' => $questionnaire]);
+        try{
+            $questionnaire = fssa_questionnaire::where('title','=',$title)->get();
+            return response() -> json(['status' => 200, 'posts' => $questionnaire]);
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
     /**
      * Display the specified resource.
@@ -71,8 +81,12 @@ class FssaQuestionnaireController extends Controller
      */
     public function edit($id)
     {
-        $questionnaire = fssa_questionnaire::find($id);
-        return response() -> json(['status' => 200, 'posts' => $questionnaire]);
+        try{
+            $questionnaire = fssa_questionnaire::find($id);
+            return response() -> json(['status' => 200, 'posts' => $questionnaire]);
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
 
     /**
@@ -84,10 +98,14 @@ class FssaQuestionnaireController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $questionnaire = fssa_questionnaire::find($id);
-        $questionnaire->title = $request->title;
+        try{
+            $questionnaire = fssa_questionnaire::find($id);
+            $questionnaire->title = $request->title;
         if($questionnaire -> save()){
             return response()->json(["status" => 200]);
+        }
+        }catch (\Exception $e) {
+            $e->getMessage();
         }
     }
 
@@ -99,9 +117,13 @@ class FssaQuestionnaireController extends Controller
      */
     public function destroy($id)
     {   
-        $questionnaire = fssa_questionnaire::find($id);
-        if($questionnaire -> delete()){
-        return response()->json(["status" => 200]);
+        try{
+            $questionnaire = fssa_questionnaire::find($id);
+            if($questionnaire -> delete()){
+                return response()->json(["status" => 200]);
+            }
+        }catch (\Exception $e) {
+            $e->getMessage();
         }
     }
 }

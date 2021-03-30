@@ -14,11 +14,11 @@ class fssa_question extends Model
 
     public function questionnaire()
     {
-        return $this->belongsTo('fssa_question','questionnaire_id');
+        return $this->belongsTo(fssa_questionnaire::class);
     }
 
     public function answers()
     {
-        return $this->hasMany(fssa_answers::class);
+        return $this->hasMany(fssa_answers::class,'question_id');
     }
 }

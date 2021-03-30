@@ -11,4 +11,9 @@ class fssa_answer extends Model
         'title','question_id','id'
     ];
     public $timestamps = false;
+
+    public function questions()
+    {
+        return $this->belongsTo('fssa_question');
+    }
 }

@@ -14,10 +14,12 @@ class FssaQuestionController extends Controller
      */
     public function index()
     {
-        // $questionnaires = Questionnaire::orderBy('updated_at', 'DESC')->get();
-        // return response() -> json(['status' => 200, 'posts' => $questionnaires]);
-        $questions = fssa_question::all();
-        return $questions;
+        try{
+            $questions = fssa_question::all();
+            return $questions;
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
 
     /**
@@ -38,17 +40,25 @@ class FssaQuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $question = new fssa_question();
-        $question->title = $request->title;
-        $question->questionnaire_id = $request->questionnaire_id;
-        $question->save();
+        try{
+            $question = new fssa_question();
+            $question->title = $request->title;
+            $question->questionnaire_id = $request->questionnaire_id;
+            $question->save();
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
 
 
     public function get($title)
     {
-        $question = fssa_question::where('title','=',$title)->get();
-        return response() -> json(['status' => 200, 'posts' => $question]);
+        try{
+            $question = fssa_question::where('title','=',$title)->get();
+            return response() -> json(['status' => 200, 'posts' => $question]);
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
 
     /**
@@ -59,9 +69,12 @@ class FssaQuestionController extends Controller
      */
     public function show($questionnaire_id)
     {
-        $questions = fssa_question::where('questionnaire_id','=',$questionnaire_id)->orderBy('id')->get();
-        // return response() -> json(['status' => 200, 'posts' => $questions]);
-        return $questions;
+        try{
+            $questions = fssa_question::where('questionnaire_id','=',$questionnaire_id)->orderBy('id')->get();
+            return $questions;
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
 
     /**
@@ -72,8 +85,12 @@ class FssaQuestionController extends Controller
      */
     public function edit($id)
     {
-        $questions = fssa_question::find($id);
-        return $questions;
+        try{
+            $questions = fssa_question::find($id);
+            return $questions;
+        }catch (\Exception $e) {
+            $e->getMessage();
+        }
     }
 
     /**
@@ -85,10 +102,14 @@ class FssaQuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $question = fssa_question::find($id);
-        $question->title = $request->title;
+        try{
+            $question = fssa_question::find($id);
+            $question->title = $request->title;
         if($question -> save()){
             return response()->json(["status" => 200]);
+        }
+        }catch (\Exception $e) {
+            $e->getMessage();
         }
     }
 

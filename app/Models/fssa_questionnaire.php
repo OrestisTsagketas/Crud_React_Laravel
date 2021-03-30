@@ -14,6 +14,6 @@ class fssa_questionnaire extends Model
 
     public function questions()
     {
-        return $this->hasMany('App\Models\fssa_question');
+        return $this->hasMany(fssa_question::class,'questionnaire_id');
     }
 }
