@@ -9,7 +9,7 @@ class dashboard extends React.Component {
         return (
             <div>
                 <Jumbotron>
-                    <h3 className="display-3" >Welcome, to Questionnaireland!!!!</h3>
+                    <h3 className="display-3" >Welcome, to my Assignment!!!!</h3>
                     <p className="lead" >Very simple page that allows you to take and share questionnaires </p>
                     <hr className="my-2" />
                     <p> Pick, create, edit or even delete a Questionnaire!</p>
